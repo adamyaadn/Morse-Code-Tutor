@@ -5,7 +5,7 @@
 // Set the secret with: wrangler secret put GROQ_API_KEY
 
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.3-70b-versatile';
+const MODEL = 'openai/gpt-oss-120b';
 
 // Restrict this to your actual GitHub Pages origin once deployed, e.g.
 // 'https://yourusername.github.io'
