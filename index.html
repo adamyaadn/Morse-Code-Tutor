@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sounder — Learn Morse Code</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Nunito:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -20,18 +20,7 @@
       <h1>SOUNDER</h1>
       <p class="subtitle">learn morse, at your own key-speed</p>
     </div>
-    <button class="settings-btn" id="settingsBtn" title="Configure worker endpoint">⚙</button>
   </header>
-
-  <div class="settings-panel" id="settingsPanel" hidden>
-    <label for="workerUrl">Cloudflare Worker URL</label>
-    <input type="text" id="workerUrl" placeholder="https://your-worker.workers.dev" />
-    <div class="settings-row">
-      <button id="saveSettings">Save</button>
-      <button id="resetProgress" class="danger">Reset my progress</button>
-    </div>
-    <p class="hint">Your progress is stored only in this browser (localStorage). No account, no server-side data.</p>
-  </div>
 
   <main class="ticker" id="ticker" aria-live="polite">
     <div class="ticker-line system">
@@ -46,6 +35,7 @@
       <span>SEND</span>
     </button>
   </footer>
+  <button id="resetProgress" class="reset-link">Start over</button>
 
 </div>
 
