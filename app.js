@@ -20,13 +20,7 @@ const ticker = document.getElementById('ticker');
 const userInput = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
 const lamp = document.getElementById('lamp');
-const settingsBtn = document.getElementById('settingsBtn');
-const settingsPanel = document.getElementById('settingsPanel');
-const workerUrlInput = document.getElementById('workerUrl');
-const saveSettingsBtn = document.getElementById('saveSettings');
 const resetProgressBtn = document.getElementById('resetProgress');
-
-workerUrlInput.value = settings.workerUrl || '';
 
 // ---- UI helpers ----
 function addLine({ role, text, morseGroups }) {
@@ -79,22 +73,14 @@ async function playChip(chip, group) {
   chip.disabled = false;
 }
 
-// ---- Settings panel ----
-settingsBtn.addEventListener('click', () => {
-  settingsPanel.hidden = !settingsPanel.hidden;
-});
-
-saveSettingsBtn.addEventListener('click', () => {
-  settings.workerUrl = workerUrlInput.value.trim();
-  saveSettings(settings);
-  settingsPanel.hidden = true;
-  addStatus('Worker URL saved.');
-});
-
 resetProgressBtn.addEventListener('click', () => {
-  if (confirm('Reset all learning progress stored in this browser?')) {
+  if (confirm('Start over? This clears your saved letters, progress, and this chat.')) {
     progress = resetProgress();
-    addStatus('Progress reset. Starting fresh.');
+    ticker.innerHTML = '';
+    addLine({
+      role: 'system',
+      text: `Tap the key below and tell me what you'd like to learn — a letter, a word, or just say "start from scratch."`
+    });
   }
 });
 
@@ -107,12 +93,6 @@ userInput.addEventListener('keydown', e => {
 async function sendMessage() {
   const text = userInput.value.trim();
   if (!text || sending) return;
-
-  if (!settings.workerUrl) {
-    addStatus('Set your Cloudflare Worker URL first (⚙ top right).');
-    settingsPanel.hidden = false;
-    return;
-  }
 
   addLine({ role: 'user', text });
   pushHistory(progress, 'user', text);
