@@ -3,8 +3,17 @@
 const { loadProgress, saveProgress, applyProgressPatch, pushHistory, resetProgress, loadSettings, saveSettings } = window.ProgressLib;
 const { playMorse } = window.MorseLib;
 
+// Baked-in default so anyone visiting the site can chat immediately —
+// no setup required. The settings panel is only for you to override this
+// (e.g. while testing a different worker) if you ever need to.
+const DEFAULT_WORKER_URL = 'https://sounder-morse-tutor.adamyaadali.workers.dev';
+
 let progress = loadProgress();
 let settings = loadSettings();
+if (!settings.workerUrl) {
+  settings.workerUrl = DEFAULT_WORKER_URL;
+  saveSettings(settings);
+}
 let sending = false;
 
 const ticker = document.getElementById('ticker');
