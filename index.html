@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sounder — Learn Morse Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="deck">
+
+  <header class="desk-header">
+    <div class="lamp-wrap" id="lampWrap" title="Sounder lamp — blinks with morse playback">
+      <div class="lamp" id="lamp"></div>
+    </div>
+    <div class="title-block">
+      <h1>SOUNDER</h1>
+      <p class="subtitle">learn morse, at your own key-speed</p>
+    </div>
+    <button class="settings-btn" id="settingsBtn" title="Configure worker endpoint">⚙</button>
+  </header>
+
+  <div class="settings-panel" id="settingsPanel" hidden>
+    <label for="workerUrl">Cloudflare Worker URL</label>
+    <input type="text" id="workerUrl" placeholder="https://your-worker.workers.dev" />
+    <div class="settings-row">
+      <button id="saveSettings">Save</button>
+      <button id="resetProgress" class="danger">Reset my progress</button>
+    </div>
+    <p class="hint">Your progress is stored only in this browser (localStorage). No account, no server-side data.</p>
+  </div>
+
+  <main class="ticker" id="ticker" aria-live="polite">
+    <div class="ticker-line system">
+      <span class="tag">SOUNDER</span>
+      <span class="msg">Tap the key below and tell me what you'd like to learn — a letter, a word, or just say "start from scratch."</span>
+    </div>
+  </main>
+
+  <footer class="key-row">
+    <input type="text" id="userInput" placeholder="Ask, answer, or say what you want to practice…" autocomplete="off" />
+    <button id="sendBtn" class="key-btn">
+      <span>SEND</span>
+    </button>
+  </footer>
+
+</div>
+
+<script src="morse.js"></script>
+<script src="progress.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
