@@ -5,38 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sounder — Learn Morse Code</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Nunito:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div class="deck">
+<div class="shell">
 
-  <header class="desk-header">
-    <div class="lamp-wrap" id="lampWrap" title="Sounder lamp — blinks with morse playback">
-      <div class="lamp" id="lamp"></div>
-    </div>
-    <div class="title-block">
-      <h1>SOUNDER</h1>
-      <p class="subtitle">learn morse, at your own key-speed</p>
+  <header class="top-bar">
+    <div class="brand">
+      <div class="lamp-wrap" id="lampWrap" title="Blinks when morse plays in chat">
+        <div class="lamp" id="lamp"></div>
+      </div>
+      <div class="brand-text">
+        <h1>Sounder</h1>
+        <p class="subtitle">learn morse, at your own key-speed</p>
+      </div>
     </div>
   </header>
 
-  <main class="ticker" id="ticker" aria-live="polite">
-    <div class="ticker-line system">
-      <span class="tag">SOUNDER</span>
-      <span class="msg">Tap the key below and tell me what you'd like to learn — a letter, a word, or just say "start from scratch."</span>
-    </div>
-  </main>
+  <div class="main-grid">
 
-  <footer class="key-row">
-    <input type="text" id="userInput" placeholder="Ask, answer, or say what you want to practice…" autocomplete="off" />
-    <button id="sendBtn" class="key-btn">
-      <span>SEND</span>
-    </button>
-  </footer>
-  <button id="resetProgress" class="reset-link">Start over</button>
+    <section class="chat-panel">
+      <main class="ticker" id="ticker" aria-live="polite">
+        <div class="ticker-line system">
+          <span class="tag">SOUNDER</span>
+          <span class="msg">Tap the key below and tell me what you'd like to learn — a letter, a word, or just say "start from scratch."</span>
+        </div>
+      </main>
 
+      <footer class="key-row">
+        <input type="text" id="userInput" placeholder="Ask, answer, or say what you want to practice…" autocomplete="off" />
+        <button id="sendBtn" class="key-btn">
+          <span>SEND</span>
+        </button>
+      </footer>
+      <button id="resetProgress" class="reset-link">Start over</button>
+    </section>
+
+    <aside class="workbench">
+      <div class="workbench-card">
+        <h2>Scratchpad</h2>
+        <p class="workbench-hint">Jot down a letter, word, or phrase to test. Nothing here is saved.</p>
+        <textarea id="scratchpad" rows="4" placeholder="e.g. SOS or hello"></textarea>
+      </div>
+
+      <div class="workbench-row">
+        <div class="workbench-card bulb-card">
+          <div class="bulb" id="bulbVisual" aria-hidden="true">
+            <div class="bulb-core" id="bulbCore"></div>
+          </div>
+          <button id="flashBtn" class="workbench-btn">Flash it</button>
+        </div>
+
+        <div class="workbench-card speaker-card">
+          <div class="speaker" id="speakerVisual" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26">
+              <path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/>
+              <path id="waveOne" d="M16.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <path id="waveTwo" d="M19 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <button id="playSoundBtn" class="workbench-btn">Play sound</button>
+        </div>
+      </div>
+    </aside>
+
+  </div>
 </div>
 
 <script src="morse.js"></script>
