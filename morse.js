@@ -46,8 +46,12 @@ window.MorseLib = (function () {
     return audioCtx;
   }
 
-  function beep(durationMs) {
+  function beep(durationMs, silent) {
     return new Promise(resolve => {
+      if (silent) {
+        setTimeout(resolve, durationMs);
+        return;
+      }
       const ctx = getAudioCtx();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -67,18 +71,18 @@ window.MorseLib = (function () {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async function playMorse(morseString, { onLampOn, onLampOff } = {}) {
+  async function playMorse(morseString, { onLampOn, onLampOff, silent = false } = {}) {
     const symbols = morseString.trim().split('');
     for (let i = 0; i < symbols.length; i++) {
       const sym = symbols[i];
       if (sym === '.') {
         onLampOn && onLampOn();
-        await beep(UNIT_MS);
+        await beep(UNIT_MS, silent);
         onLampOff && onLampOff();
         await sleep(UNIT_MS);
       } else if (sym === '-') {
         onLampOn && onLampOn();
-        await beep(UNIT_MS * 3);
+        await beep(UNIT_MS * 3, silent);
         onLampOff && onLampOff();
         await sleep(UNIT_MS);
       } else if (sym === ' ') {
