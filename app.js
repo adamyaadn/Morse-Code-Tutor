@@ -1,7 +1,7 @@
 // app.js — wires up the chat UI to the Cloudflare Worker and local progress state.
 
 const { loadProgress, saveProgress, applyProgressPatch, pushHistory, resetProgress, loadSettings, saveSettings } = window.ProgressLib;
-const { playMorse } = window.MorseLib;
+const { textToMorse, playMorse } = window.MorseLib;
 
 // Baked-in default so anyone visiting the site can chat immediately —
 // no setup required. The settings panel is only for you to override this
@@ -21,6 +21,11 @@ const userInput = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
 const lamp = document.getElementById('lamp');
 const resetProgressBtn = document.getElementById('resetProgress');
+const scratchpad = document.getElementById('scratchpad');
+const flashBtn = document.getElementById('flashBtn');
+const playSoundBtn = document.getElementById('playSoundBtn');
+const bulbCore = document.getElementById('bulbCore');
+const speakerVisual = document.getElementById('speakerVisual');
 
 // ---- UI helpers ----
 function addLine({ role, text, morseGroups }) {
@@ -82,6 +87,33 @@ resetProgressBtn.addEventListener('click', () => {
       text: `Tap the key below and tell me what you'd like to learn — a letter, a word, or just say "start from scratch."`
     });
   }
+});
+
+// ---- Workbench: scratchpad, bulb, speaker ----
+// Nothing typed here is ever saved — purely a scratch space to test morse.
+flashBtn.addEventListener('click', async () => {
+  const text = scratchpad.value.trim();
+  if (!text) return;
+  flashBtn.disabled = true;
+  const morse = textToMorse(text);
+  await playMorse(morse, {
+    onLampOn: () => bulbCore.classList.add('lit'),
+    onLampOff: () => bulbCore.classList.remove('lit'),
+    silent: true
+  });
+  flashBtn.disabled = false;
+});
+
+playSoundBtn.addEventListener('click', async () => {
+  const text = scratchpad.value.trim();
+  if (!text) return;
+  playSoundBtn.disabled = true;
+  const morse = textToMorse(text);
+  await playMorse(morse, {
+    onLampOn: () => speakerVisual.classList.add('active'),
+    onLampOff: () => speakerVisual.classList.remove('active')
+  });
+  playSoundBtn.disabled = false;
 });
 
 // ---- Sending messages ----
