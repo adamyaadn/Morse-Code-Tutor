@@ -46,8 +46,8 @@
     <aside class="workbench">
       <div class="workbench-card">
         <h2>Scratchpad</h2>
-        <p class="workbench-hint">Jot down a letter, word, or phrase to test. Nothing here is saved.</p>
-        <textarea id="scratchpad" rows="4" placeholder="e.g. SOS or hello"></textarea>
+        <p class="workbench-hint">Type a letter, word, or phrase — it converts to morse below as you go.</p>
+        <textarea id="scratchpad" rows="3" placeholder="e.g. hello"></textarea>
       </div>
 
       <div class="workbench-row">
@@ -68,6 +68,12 @@
           </div>
           <button id="playSoundBtn" class="workbench-btn">Play sound</button>
         </div>
+      </div>
+
+      <div class="workbench-card">
+        <h2>Morse scratchpad</h2>
+        <p class="workbench-hint">Or type morse directly — dots and dashes, space between letters, "/" between words.</p>
+        <textarea id="morsePad" rows="3" class="mono-pad" placeholder="e.g. .... . .-.. .-.. ---"></textarea>
       </div>
     </aside>
 
