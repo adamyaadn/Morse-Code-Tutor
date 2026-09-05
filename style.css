@@ -351,6 +351,13 @@ body {
 .speaker-card .workbench-btn:hover { border-color: var(--teal); color: var(--teal); }
 .workbench-btn:disabled { opacity: 0.5; cursor: default; }
 
+.workbench-credit {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  margin: 4px 0 0;
+}
+
 /* ---- Scrollbars ---- */
 .ticker::-webkit-scrollbar, .workbench::-webkit-scrollbar { width: 8px; }
 .ticker::-webkit-scrollbar-thumb, .workbench::-webkit-scrollbar-thumb {
