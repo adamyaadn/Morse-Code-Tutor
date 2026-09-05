@@ -1,7 +1,7 @@
 // app.js — wires up the chat UI to the Cloudflare Worker and local progress state.
 
 const { loadProgress, saveProgress, applyProgressPatch, pushHistory, resetProgress, loadSettings, saveSettings } = window.ProgressLib;
-const { textToMorse, playMorse } = window.MorseLib;
+const { textToMorse, morseToText, playMorse } = window.MorseLib;
 
 // Baked-in default so anyone visiting the site can chat immediately —
 // no setup required. The settings panel is only for you to override this
@@ -22,6 +22,7 @@ const sendBtn = document.getElementById('sendBtn');
 const lamp = document.getElementById('lamp');
 const resetProgressBtn = document.getElementById('resetProgress');
 const scratchpad = document.getElementById('scratchpad');
+const morsePad = document.getElementById('morsePad');
 const flashBtn = document.getElementById('flashBtn');
 const playSoundBtn = document.getElementById('playSoundBtn');
 const bulbCore = document.getElementById('bulbCore');
@@ -91,11 +92,28 @@ resetProgressBtn.addEventListener('click', () => {
 
 // ---- Workbench: scratchpad, bulb, speaker ----
 // Nothing typed here is ever saved — purely a scratch space to test morse.
+// The text pad and morse pad stay in sync in both directions; the bulb
+// and speaker below always act on whichever pad was most recently edited.
+
+function getCurrentMorse() {
+  const morseVal = morsePad.value.trim();
+  if (morseVal) return morseVal;
+  const textVal = scratchpad.value.trim();
+  return textVal ? textToMorse(textVal) : '';
+}
+
+scratchpad.addEventListener('input', () => {
+  morsePad.value = textToMorse(scratchpad.value);
+});
+
+morsePad.addEventListener('input', () => {
+  scratchpad.value = morseToText(morsePad.value);
+});
+
 flashBtn.addEventListener('click', async () => {
-  const text = scratchpad.value.trim();
-  if (!text) return;
+  const morse = getCurrentMorse();
+  if (!morse) return;
   flashBtn.disabled = true;
-  const morse = textToMorse(text);
   await playMorse(morse, {
     onLampOn: () => bulbCore.classList.add('lit'),
     onLampOff: () => bulbCore.classList.remove('lit'),
@@ -105,10 +123,9 @@ flashBtn.addEventListener('click', async () => {
 });
 
 playSoundBtn.addEventListener('click', async () => {
-  const text = scratchpad.value.trim();
-  if (!text) return;
+  const morse = getCurrentMorse();
+  if (!morse) return;
   playSoundBtn.disabled = true;
-  const morse = textToMorse(text);
   await playMorse(morse, {
     onLampOn: () => speakerVisual.classList.add('active'),
     onLampOff: () => speakerVisual.classList.remove('active')
